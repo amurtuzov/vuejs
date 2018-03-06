@@ -1,0 +1,13 @@
+{
+  "name": "vuejs-training-app",
+  "version": "1.0.0",
+  "description": "Ajax requests in VueJs",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Anar Murtuzov",
+  "devDependencies": {
+    "express": "^4.16.2"
+  }
+}

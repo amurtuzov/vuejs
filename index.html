@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+	<div id="app">
+		<ul class="photographers">
+			<li v-for="photographer in photographers">
+				<button @click="getAlbums(photographer.id)" :href="photographer.id">{{ photographer.name }}</button>
+				<table cellspacing="1" border="1">
+					<tbody>
+						<tr>
+							<td>id</td><td>album name</td>
+						</tr>
+						<tr v-for="album in photographer.albums">
+							<td>{{ album.id }}</td><td>{{ album.title }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</li>
+		</ul>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="app.js"></script>
+</body>
+</html>
