@@ -5,22 +5,66 @@
 </head>
 <body>
 	<div id="app">
+		<div v-show="showPreloader" id="cube-loader">
+    		<div class="caption">
+      			<div class="cube-loader">
+        			<div class="cube loader-1"></div>
+        			<div class="cube loader-2"></div>
+        			<div class="cube loader-4"></div>
+        			<div class="cube loader-3"></div>
+      			</div>
+    		</div>
+  		</div>
 		<ul class="photographers">
-			<li v-for="photographer in photographers">
-				<button @click="getAlbums(photographer.id)" :href="photographer.id">{{ photographer.name }}</button>
-				<table cellspacing="1" border="1">
+			<li class="photographer" v-for="photographer in photographers" :key="photographer.id">
+				<button class="photographer__name" v-on:click="photographer.expanded=!photographer.expanded" :href="photographer.id">{{ photographer.name }}</button>
+				<transition name="slide-fade">
+				<table cellspacing="1" border="1" class="photographer-albums" v-show="photographer.expanded">
 					<tbody>
 						<tr>
-							<td>id</td><td>album name</td>
+							<td>Album id</td><td><input class="search-field" type="text" v-model="filter" placeholder="Search by album name"></td>
 						</tr>
-						<tr v-for="album in photographer.albums">
-							<td>{{ album.id }}</td><td>{{ album.title }}</td>
+						<tr v-for="album, key in filteredList(photographer.albums)">
+							<td>{{++key}}</td><td @click="getPhotos(album.id)">{{ album.title }}</td>
 						</tr>
 					</tbody>
 				</table>
+				</transition>
 			</li>
 		</ul>
-	</div>
+
+
+		<transition name="modal">
+    <div v-if="showModal" @close="showModal = false" class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+              default header
+          </div>
+
+          <div class="modal-body">
+              <div v-for="photo in lazyLoadPhotos">
+              	<img v-bind:src="photo.thumbnailUrl"/>
+              </div>
+          </div>
+
+          <div class="modal-footer">
+              default footer
+              <button class="modal-default-button" @click="closeModal">
+                OK
+              </button>
+              <button class="modal-default-button" @click="getMorePhotos">
+                more
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+
+
+		</div>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script src="app.js"></script>
