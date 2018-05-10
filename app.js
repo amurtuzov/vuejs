@@ -7,7 +7,7 @@ var app = new Vue({
 		showPreloader: true,
 		photos: [],
 		lazyLoadPhotos: [],
-		photosCounter: 10             ПОФИКСИТЬ БАГ В ЦИКЛЕ FOR
+		photosCounter: 10
 	},
 	methods: {
 		getData: function(url){
